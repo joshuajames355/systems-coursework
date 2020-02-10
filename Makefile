@@ -7,4 +7,4 @@ gameoflife: gameoflife.c libgol.so
 	gcc gol.o -L . -l:libgol.so -o gol
 
 clean:	
-	rm -rf libgol.o gol.o libgol.so gol gol.exe
+	rm -rf libgol.o gol.o libgol.so gol gol.exe gol.exe.stackdump
