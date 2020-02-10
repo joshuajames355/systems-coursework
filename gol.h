@@ -3,8 +3,8 @@
 struct universe {
 /*Put some appropriate things here*/
     int* start; //an array of width*height ints, where "start" is the first element
-    int width;
-    int height;
+    unsigned int width;
+    unsigned int height;
 };
 
 /*Do not modify the next seven lines*/
