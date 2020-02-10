@@ -18,10 +18,10 @@ int main(int argc, char *argv[]){
     switch (opt)
     {
     case 'i':
-      strcpy(inputFile, optarg);
+      strncpy(inputFile, optarg, 50);
       break;
     case 'o':
-      strcpy(outputFile, optarg);
+      strncpy(outputFile, optarg, 50);
       break;
     case 'g':
       generations = atoi(optarg);
