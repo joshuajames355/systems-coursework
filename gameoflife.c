@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
   }
   else
   {
-    read_in_file(stdin,&v);/* code */
+    read_in_file(stdin,&v);
   }
 
   for(int x = 0; x<generations; x++)
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 
   if(strlen(outputFile) > 0)
   {
-    FILE* outFile = fopen(outputFile, "W");
+    FILE* outFile = fopen(outputFile, "w");
     write_out_file(outFile,&v);
     fclose(outFile);
   }

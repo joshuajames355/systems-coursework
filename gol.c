@@ -1,5 +1,6 @@
 #include "gol.h"
 #include <string.h>
+#include <stdlib.h>
 
 void readLine(FILE *infile, char* out, int size)
 {
@@ -28,26 +29,25 @@ void readLine(FILE *infile, char* out, int size)
     }
 }
 
-//each line is a seperate
 void read_in_file(FILE *infile, struct universe *u)
 {
     char row[513]; //Max length of 512 + null seperator
-    readLine(infile, &row, 512);
+    readLine(infile, row, 512);
 
     (*u).width = strlen(row);
     (*u).start = malloc((*u).width * sizeof(int));
 
-    unsigned int rowIndex = 0;
+    int rowIndex = 0;
 
     while (strlen(row) != 0)
     {
         (*u).start = realloc((*u).start, (rowIndex+1)*(*u).width*sizeof(int));
     
-        unsigned int posIn = 0; //curent position in row
-        unsigned int posOut = 0; //current position in u.start
+        int posIn = 0; //curent position in row
+        int posOut = 0; //current position in u.start
 
         //Copy from input (row) to output (u.start)
-        while(posIn < strlen(row) && posOut < (*u).width)
+        while(posIn < (int) strlen(row) && posOut < (*u).width)
         {
             if(row[posIn] == '*') 
             {
@@ -78,7 +78,7 @@ void read_in_file(FILE *infile, struct universe *u)
         }        
 
         rowIndex += 1;
-        readLine(infile, &row, (*u).width);
+        readLine(infile, row, (*u).width);
     }
     (*u).height = rowIndex;
 

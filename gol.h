@@ -2,8 +2,8 @@
 
 struct universe {
     int* start; //an array of width*height ints, where "start" is the pointer to the first element
-    unsigned int width;
-    unsigned int height;
+    int width;
+    int height;
 
     //additional statisitics
     unsigned int numAlive; //number of cells that are currently alive
