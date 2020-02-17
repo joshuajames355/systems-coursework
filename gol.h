@@ -21,5 +21,4 @@ void evolve(struct universe *u, int (*rule)(struct universe *u, int column, int 
 void print_statistics(struct universe *u);
 /*You can modify after this line again*/
 
-void print_universe(struct universe *u);
 int getNumAliveCells(struct universe *u);
