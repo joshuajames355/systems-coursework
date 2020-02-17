@@ -1,42 +1,64 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include"gol.h"
 
 int main(int argc, char *argv[]){
-  char inputFile[50] = "";
-  char outputFile[50] = "";
+  char *inputFile = 0;
+  char *outputFile = 0;
+
   int printStats = 0;
   int torus = 0;
   int generations = 5;
 
-
-  int opt;
-  while ((opt = getopt(argc, argv, "i:o:g:st")) != -1)
+  int state = 0;
+  for(int x = 1; x < argc; x++)
   {
-    switch (opt)
+    switch(state)
     {
-    case 'i':
-      strncpy(inputFile, optarg, 50);
-      break;
-    case 'o':
-      strncpy(outputFile, optarg, 50);
-      break;
-    case 'g':
-      generations = atoi(optarg);
-      break;
-    case 's':
-      printStats = 1;
-      break;
-    case 't':
-      torus = 1;
-      break;
+      case 0:
+        switch(argv[x][0])
+        {
+          case '-':
+            if (strlen(argv[x]) > 1)
+            {
+              switch(argv[x][1])
+              {
+                case 'i':
+                  state = 1;
+                  break;
+                case 'o':
+                  state = 2;
+                  break;
+                case 'g':
+                  state = 3;
+                  break;
+                case 's':
+                  printStats = 1;
+                  break;
+                case 't':
+                  torus = 1;
+                  break;
+              }
+            }
+        }
+        break;
+      case 1://handling i
+        state = 0;
+        inputFile = argv[x];
+        break;
+      case 2://handling o
+        state = 0;
+        outputFile = argv[x];
+        break;
+      case 3://handling g
+        state = 0;
+        generations = atoi(argv[x]);
+        break;
     }
   }
 
   struct universe v; 
-  if(strlen(inputFile) > 0)
+  if(inputFile)
   {
     read_in_file(fopen(inputFile, "r"),&v);
   }
@@ -53,7 +75,7 @@ int main(int argc, char *argv[]){
   
   if(printStats) print_statistics(&v);
 
-  if(strlen(outputFile) > 0)
+  if(outputFile)
   {
     FILE* outFile = fopen(outputFile, "w");
     write_out_file(outFile,&v);
