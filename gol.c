@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+int getNumAliveCells(struct universe *u);
+
 void readLine(FILE *infile, char* out, int size)
 {
     int currentPos = 0;
