@@ -83,7 +83,13 @@ int main(int argc, char *argv[]){
   struct universe v; 
   if(inputFile)
   {
-    read_in_file(fopen(inputFile, "r"),&v);
+    FILE* filepointer = fopen(inputFile, "r");
+    if(filepointer == NULL)
+    {
+      fprintf(stderr, "ERROR: Failed to open file %s for reading.", inputFile);
+      return 1;
+    }
+    read_in_file(filepointer,&v);
   }
   else
   {
@@ -101,6 +107,11 @@ int main(int argc, char *argv[]){
   if(outputFile)
   {
     FILE* outFile = fopen(outputFile, "w");
+    if(outFile == NULL)
+    {
+      fprintf(stderr, "ERROR: Failed to open file %s for writing.", outputFile);
+      return 1;
+    }
     write_out_file(outFile,&v);
     fclose(outFile);
   }
