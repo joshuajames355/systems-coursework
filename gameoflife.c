@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
 
   int printStats = 0;
   int torus = 0;
-  int generations = 5;
+  int generations = -1;
 
   int state = 0;
   for(int x = 1; x < argc; x++)
@@ -19,43 +19,66 @@ int main(int argc, char *argv[]){
         switch(argv[x][0])
         {
           case '-':
-            if (strlen(argv[x]) > 1)
+            if (strlen(argv[x]) == 2)
             {
               switch(argv[x][1])
               {
                 case 'i':
                   state = 1;
-                  break;
+                  continue;
                 case 'o':
                   state = 2;
-                  break;
+                  continue;
                 case 'g':
                   state = 3;
-                  break;
+                  continue;
                 case 's':
                   printStats = 1;
-                  break;
+                  continue;
                 case 't':
                   torus = 1;
-                  break;
+                  continue;
               }
             }
         }
-        break;
+        fprintf(stderr, "ERROR: Unrecognized command line option %s.", argv[x]);
+        return 1;
       case 1://handling i
         state = 0;
+        if(inputFile && strcmp(inputFile, argv[x]))
+        {
+          fprintf(stderr, "ERROR: Conflicting command line options.");
+          return 1;
+        }
         inputFile = argv[x];
         break;
       case 2://handling o
         state = 0;
+        if(outputFile && strcmp(outputFile, argv[x]))
+        {
+          fprintf(stderr, "ERROR: Conflicting command line options.");
+          return 1;
+        }
         outputFile = argv[x];
         break;
       case 3://handling g
         state = 0;
+        if(generations != -1 && generations != atoi(argv[x]))
+        {
+          fprintf(stderr, "ERROR: Conflicting command line options.");
+          return 1;
+        }
         generations = atoi(argv[x]);
         break;
     }
   }
+  if(state != 0)
+  {
+    fprintf(stderr, "ERROR: Expecting another value after %s.", argv[argc-1]);
+    return 1;
+  }
+
+  if(generations == -1) generations = 5;
 
   struct universe v; 
   if(inputFile)
