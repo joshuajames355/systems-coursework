@@ -63,12 +63,22 @@ int main(int argc, char *argv[]){
         break;
       case 3://handling g
         state = 0;
-        if(generations != -1 && generations != atoi(argv[x]))
+
+        int num; //convert to int
+        char* end = argv[x];
+        num = strtol(argv[x], &end, 10);
+
+        if(end == argv[x])
+        {
+          fprintf(stderr, "ERROR: Invalid number: %s", argv[x]);
+          return 1;
+        }
+        if(generations != -1 && generations != num)
         {
           fprintf(stderr, "ERROR: Conflicting command line options.");
           return 1;
         }
-        generations = atoi(argv[x]);
+        generations = num;
         break;
     }
   }
