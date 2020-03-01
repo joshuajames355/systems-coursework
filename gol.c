@@ -61,6 +61,12 @@ void read_in_file(FILE *infile, struct universe *u)
                 (*u).start[rowIndex*(*u).width + posOut] = 0;
                 ++posOut;
             }
+            else
+            {
+                fprintf(stderr, "ERROR: Invalid char: %c", row[posIn]);
+                exit(1);
+            }
+            
             ++posIn;
         }
 
